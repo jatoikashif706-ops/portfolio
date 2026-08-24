@@ -1,7 +1,8 @@
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+// Initialize Resend only if API key is available
+const resend = process.env.RESEND_API_KEY ? new Resend(process.env.RESEND_API_KEY) : null;
 
 export async function POST(request: Request) {
   try {
@@ -15,6 +16,18 @@ export async function POST(request: Request) {
       );
     }
 
+    // 2. Check if Resend is configured
+    if (!resend) {
+      console.log("Contact form submission (Resend not configured):", { name, email, message });
+      return NextResponse.json(
+        { 
+          success: true, 
+          message: "Message received! (Email service not configured in development)" 
+        },
+        { status: 200 }
+      );
+    }
+
     const recipient = process.env.CONTACT_RECIPIENT_EMAIL;
     if (!recipient) {
       return NextResponse.json(
@@ -23,7 +36,7 @@ export async function POST(request: Request) {
       );
     }
 
-    // 2. Send Email via Resend
+    // 3. Send Email via Resend
     const { data, error } = await resend.emails.send({
       from: "Portfolio Contact Form <onboarding@resend.dev>", // Replace with your verified domain in production
       to: [recipient],
@@ -45,6 +58,7 @@ export async function POST(request: Request) {
 
     return NextResponse.json({ success: true, id: data?.id }, { status: 200 });
   } catch (err) {
+    console.error("Contact form error:", err);
     return NextResponse.json(
       { error: "An unexpected error occurred while sending email." },
       { status: 500 }
