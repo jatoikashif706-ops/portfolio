@@ -176,108 +176,106 @@ export default function Portfolio() {
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,rgba(2,6,23,0.85)_100%)] pointer-events-none" />
         
         {/* Hero Foreground Content */}
-        <div className="relative z-10 max-w-5xl mx-auto px-6 py-20 text-center space-y-8">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-sky-500/30 bg-sky-500/10 text-sky-400 text-xs font-semibold backdrop-blur-md"
-          >
-            <Terminal className="w-4 h-4" /> Software Engineering Student & Full-Stack Developer
-          </motion.div>
-
-          {/* Profile Image with 3D Animation */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8, rotateY: -30 }}
-            animate={{ opacity: 1, scale: 1, rotateY: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="flex justify-center"
-          >
+        <div className="relative z-10 max-w-6xl mx-auto px-6 py-20">
+          <div className="flex flex-col lg:flex-row items-center justify-center gap-12 lg:gap-16">
+            
+            {/* Left Side - Profile Image */}
             <motion.div
-              whileHover={{ scale: 1.05, rotateY: 5, rotateX: 5 }}
-              transition={{ duration: 0.3 }}
-              className="relative w-32 h-32 md:w-40 md:h-40"
-              style={{ perspective: "1000px" }}
+              initial={{ opacity: 0, x: -50, rotateY: -30 }}
+              animate={{ opacity: 1, x: 0, rotateY: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              className="flex-shrink-0"
             >
-              <div className="absolute inset-0 rounded-full bg-gradient-to-r from-sky-400 via-teal-300 to-emerald-400 opacity-75 blur-xl animate-pulse" />
-              <Image
-                src="/profile.jpg"
-                alt="Kashif Qurban"
-                width={160}
-                height={160}
-                className="relative rounded-full border-4 border-slate-800 shadow-2xl shadow-sky-500/50 object-cover"
-                priority
-              />
+              <motion.div
+                whileHover={{ scale: 1.05, rotateY: 10, rotateZ: 2 }}
+                transition={{ duration: 0.4, ease: "easeOut" }}
+                className="relative w-48 h-48 md:w-64 md:h-64 lg:w-72 lg:h-72"
+                style={{ perspective: "1000px" }}
+              >
+                <div className="absolute inset-0 rounded-full bg-gradient-to-br from-sky-400 via-teal-300 to-emerald-400 opacity-30 blur-3xl animate-pulse" />
+                <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-purple-400 via-pink-300 to-sky-400 opacity-20 blur-2xl animate-pulse" style={{ animationDelay: '1s' }} />
+                <Image
+                  src="/profile.jpg"
+                  alt="Kashif Qurban"
+                  width={288}
+                  height={288}
+                  className="relative rounded-full border-4 border-slate-800/80 shadow-2xl shadow-sky-500/30 object-cover ring-4 ring-slate-700/50"
+                  priority
+                />
+              </motion.div>
             </motion.div>
-          </motion.div>
 
-          <motion.h1
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.3 }}
-            className="text-5xl md:text-7xl font-extrabold tracking-tight text-slate-100 leading-tight"
-          >
-            Hi, I&apos;m{" "}
-            <span className="bg-gradient-to-r from-sky-400 via-teal-300 to-emerald-400 bg-clip-text text-transparent">
-              Kashif Qurban
-            </span>
-          </motion.h1>
+            {/* Right Side - Text Content */}
+            <div className="flex-1 text-center lg:text-left space-y-6">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6 }}
+                className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-sky-500/30 bg-sky-500/10 text-sky-400 text-xs font-semibold backdrop-blur-md"
+              >
+                <Terminal className="w-4 h-4" /> Software Engineering Student & Full-Stack Developer
+              </motion.div>
 
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
-            className="text-base md:text-lg text-slate-300 max-w-xl mx-auto"
-          >
-            21 Years Old
-          </motion.p>
+              <motion.h1
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.3 }}
+                className="text-4xl md:text-6xl lg:text-7xl font-extrabold tracking-tight text-slate-100 leading-tight"
+              >
+                Hi, I&apos;m{" "}
+                <span className="bg-gradient-to-r from-sky-400 via-teal-300 to-emerald-400 bg-clip-text text-transparent">
+                  Kashif Qurban
+                </span>
+              </motion.h1>
 
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.5 }}
-            className="text-lg md:text-xl text-slate-400 max-w-3xl mx-auto leading-relaxed"
-          >
-            Full-Stack & Mobile Developer building production web applications, cross-platform apps, AI-driven solutions, and custom WebGL experiences with Next.js, React Native, TypeScript, and C++.
-          </motion.p>
+              <motion.p
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.5 }}
+                className="text-base md:text-lg lg:text-xl text-slate-400 leading-relaxed max-w-2xl"
+              >
+                Full-Stack & Mobile Developer building production web applications, cross-platform apps, AI-driven solutions, and custom WebGL experiences with Next.js, React Native, TypeScript, and C++.
+              </motion.p>
 
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.6 }}
-            className="flex flex-wrap justify-center gap-4 pt-4"
-          >
-            <a
-              href="#projects"
-              className="px-8 py-3.5 rounded-xl bg-sky-500 hover:bg-sky-400 text-slate-950 font-bold text-sm transition-all shadow-lg shadow-sky-500/25 flex items-center gap-2 group"
-            >
-              Explore Projects <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-            </a>
-            <a
-              href="#contact"
-              className="px-8 py-3.5 rounded-xl border border-slate-800 bg-slate-900/80 hover:bg-slate-800/80 text-slate-200 text-sm font-semibold backdrop-blur-md transition-colors"
-            >
-              Get In Touch
-            </a>
-          </motion.div>
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.6 }}
+                className="flex flex-wrap justify-center lg:justify-start gap-4 pt-4"
+              >
+                <a
+                  href="#projects"
+                  className="px-8 py-3.5 rounded-xl bg-sky-500 hover:bg-sky-400 text-slate-950 font-bold text-sm transition-all shadow-lg shadow-sky-500/25 flex items-center gap-2 group"
+                >
+                  Explore Projects <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                </a>
+                <a
+                  href="#contact"
+                  className="px-8 py-3.5 rounded-xl border border-slate-800 bg-slate-900/80 hover:bg-slate-800/80 text-slate-200 text-sm font-semibold backdrop-blur-md transition-colors"
+                >
+                  Get In Touch
+                </a>
+              </motion.div>
 
-          {/* Social Links */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.7 }}
-            className="flex flex-wrap justify-center gap-4 pt-6"
-          >
-            {[
-              { href: "https://github.com/jatoikashif706-ops", icon: GitHubIcon, label: "GitHub" },
-              { href: "https://www.linkedin.com/in/kashif-qurban-92594228a/", icon: LinkedInIcon, label: "LinkedIn" },
-              { href: "https://www.upwork.com/freelancers/kashifq18", icon: UpworkIcon, label: "Upwork" }
-            ].map(link => (
-              <a key={link.label} href={link.href} target="_blank" rel="noreferrer" className="px-5 py-2.5 rounded-xl border border-slate-800/80 bg-slate-900/60 hover:bg-slate-800/80 text-slate-300 text-sm font-medium backdrop-blur-md transition-colors flex items-center gap-2.5">
-                <link.icon className="w-5 h-5" /> {link.label}
-              </a>
-            ))}
-          </motion.div>
+              {/* Social Links */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.7 }}
+                className="flex flex-wrap justify-center lg:justify-start gap-4 pt-4"
+              >
+                {[
+                  { href: "https://github.com/jatoikashif706-ops", icon: GitHubIcon, label: "GitHub" },
+                  { href: "https://www.linkedin.com/in/kashif-qurban-92594228a/", icon: LinkedInIcon, label: "LinkedIn" },
+                  { href: "https://www.upwork.com/freelancers/kashifq18", icon: UpworkIcon, label: "Upwork" }
+                ].map(link => (
+                  <a key={link.label} href={link.href} target="_blank" rel="noreferrer" className="px-5 py-2.5 rounded-xl border border-slate-800/80 bg-slate-900/60 hover:bg-slate-800/80 text-slate-300 text-sm font-medium backdrop-blur-md transition-colors flex items-center gap-2.5">
+                    <link.icon className="w-5 h-5" /> {link.label}
+                  </a>
+                ))}
+              </motion.div>
+            </div>
+          </div>
         </div>
       </section>
 
