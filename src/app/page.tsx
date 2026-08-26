@@ -1,9 +1,9 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import Image from "next/image";
 import dynamic from "next/dynamic";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 import {
@@ -14,14 +14,13 @@ import {
   Code2,
   Database,
   Cpu,
-  Send,
-  CheckCircle2,
   Briefcase,
   Terminal,
   Sparkles,
   ArrowRight,
 } from "lucide-react";
 import TiltCard from "@/components/TiltCard";
+import ContactForm from "@/components/ContactForm";
 
 // Dynamic import for 3D component (SSR disabled for WebGL)
 const HeroCanvas3D = dynamic(() => import("@/components/HeroCanvas3D"), {
@@ -148,28 +147,6 @@ const SKILL_CATEGORIES = [
 ];
 
 export default function Portfolio() {
-  const [formData, setFormData] = useState({ name: "", email: "", message: "" });
-  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setStatus("loading");
-    try {
-      const res = await fetch("/api/send", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
-      });
-      if (!res.ok) throw new Error("Submission failed");
-      setStatus("success");
-      setFormData({ name: "", email: "", message: "" });
-      setTimeout(() => setStatus("idle"), 5000);
-    } catch {
-      setStatus("error");
-      setTimeout(() => setStatus("idle"), 5000);
-    }
-  };
-
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100 font-sans selection:bg-sky-500 selection:text-white">
       {/* Background Glow */}
@@ -479,65 +456,9 @@ export default function Portfolio() {
           whileInView="visible"
           viewport={{ once: true, amount: 0.3 }}
           variants={fadeIn}
-          className="space-y-12 pt-16 border-t border-slate-800/80"
+          className="py-20"
         >
-          <div className="max-w-xl mx-auto text-center space-y-4">
-            <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-slate-100">Send Me a Message</h2>
-            <p className="text-base text-slate-400">Interested in hiring me or collaborating on a project? Drop a message below.</p>
-          </div>
-          <form onSubmit={handleSubmit} className="max-w-xl mx-auto space-y-5">
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-              <input
-                type="text"
-                required
-                value={formData.name}
-                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                placeholder="Your Name"
-                className="w-full px-5 py-3 rounded-xl bg-slate-900 border border-slate-800 text-slate-100 placeholder-slate-500 text-sm focus:outline-none focus:border-sky-500 transition-colors"
-              />
-              <input
-                type="email"
-                required
-                value={formData.email}
-                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                placeholder="name@example.com"
-                className="w-full px-5 py-3 rounded-xl bg-slate-900 border border-slate-800 text-slate-100 placeholder-slate-500 text-sm focus:outline-none focus:border-sky-500 transition-colors"
-              />
-            </div>
-            <textarea
-              required
-              rows={5}
-              value={formData.message}
-              onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-              placeholder="Write your message here..."
-              className="w-full px-5 py-3 rounded-xl bg-slate-900 border border-slate-800 text-slate-100 placeholder-slate-500 text-sm focus:outline-none focus:border-sky-500 transition-colors resize-none"
-            />
-            <button
-              type="submit"
-              disabled={status === "loading"}
-              className="w-full py-3.5 rounded-xl bg-sky-500 hover:bg-sky-400 text-slate-950 font-bold text-sm transition-all flex items-center justify-center gap-2.5 shadow-lg shadow-sky-500/25 disabled:opacity-50"
-            >
-              {status === "loading" ? (
-                "Sending..."
-              ) : status === "success" ? (
-                <>Message Sent! <CheckCircle2 className="w-5 h-5 text-slate-950" /></>
-              ) : (
-                <>Send Message <Send className="w-4 h-4" /></>
-              )}
-            </button>
-            <AnimatePresence>
-              {status === "error" && (
-                <motion.p
-                  initial={{ opacity: 0, y: -10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0 }}
-                  className="text-sm text-rose-400 text-center"
-                >
-                  Failed to send message. Please try again.
-                </motion.p>
-              )}
-            </AnimatePresence>
-          </form>
+          <ContactForm />
         </motion.section>
       </main>
 
