@@ -186,10 +186,35 @@ export default function Portfolio() {
             <Terminal className="w-4 h-4" /> Software Engineering Student & Full-Stack Developer
           </motion.div>
 
+          {/* Profile Image with 3D Animation */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8, rotateY: -30 }}
+            animate={{ opacity: 1, scale: 1, rotateY: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="flex justify-center"
+          >
+            <motion.div
+              whileHover={{ scale: 1.05, rotateY: 5, rotateX: 5 }}
+              transition={{ duration: 0.3 }}
+              className="relative w-32 h-32 md:w-40 md:h-40"
+              style={{ perspective: "1000px" }}
+            >
+              <div className="absolute inset-0 rounded-full bg-gradient-to-r from-sky-400 via-teal-300 to-emerald-400 opacity-75 blur-xl animate-pulse" />
+              <Image
+                src="/profile.jpg"
+                alt="Kashif Qurban"
+                width={160}
+                height={160}
+                className="relative rounded-full border-4 border-slate-800 shadow-2xl shadow-sky-500/50 object-cover"
+                priority
+              />
+            </motion.div>
+          </motion.div>
+
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.1 }}
+            transition={{ duration: 0.6, delay: 0.3 }}
             className="text-5xl md:text-7xl font-extrabold tracking-tight text-slate-100 leading-tight"
           >
             Hi, I&apos;m{" "}
@@ -201,7 +226,16 @@ export default function Portfolio() {
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
+            transition={{ duration: 0.6, delay: 0.4 }}
+            className="text-base md:text-lg text-slate-300 max-w-xl mx-auto"
+          >
+            21 Years Old
+          </motion.p>
+
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.5 }}
             className="text-lg md:text-xl text-slate-400 max-w-3xl mx-auto leading-relaxed"
           >
             Full-Stack & Mobile Developer building production web applications, cross-platform apps, AI-driven solutions, and custom WebGL experiences with Next.js, React Native, TypeScript, and C++.
@@ -210,7 +244,7 @@ export default function Portfolio() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.3 }}
+            transition={{ duration: 0.6, delay: 0.6 }}
             className="flex flex-wrap justify-center gap-4 pt-4"
           >
             <a
@@ -231,7 +265,7 @@ export default function Portfolio() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
+            transition={{ duration: 0.6, delay: 0.7 }}
             className="flex flex-wrap justify-center gap-4 pt-6"
           >
             {[
