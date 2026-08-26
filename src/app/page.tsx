@@ -429,21 +429,23 @@ export default function Portfolio() {
             <h3 className="text-2xl font-bold text-slate-100 mb-8 text-center">Organized by Domain</h3>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {SKILL_CATEGORIES.map((category, idx) => (
-                <motion.div key={idx} variants={fadeIn} className="p-8 rounded-2xl border border-slate-800/80 bg-slate-900/40 space-y-5">
-                  <div className="flex items-center gap-3.5">
-                    <div className="p-2.5 rounded-xl bg-slate-800/80 border border-slate-700/50">
-                      {category.icon}
+                <TiltCard key={idx}>
+                  <motion.div variants={fadeIn} className="p-8 space-y-5">
+                    <div className="flex items-center gap-3.5">
+                      <div className="p-2.5 rounded-xl bg-slate-800/80 border border-slate-700/50">
+                        {category.icon}
+                      </div>
+                      <h3 className="text-xl font-bold text-slate-200">{category.title}</h3>
                     </div>
-                    <h3 className="text-xl font-bold text-slate-200">{category.title}</h3>
-                  </div>
-                  <div className="flex flex-wrap gap-2.5 pt-3 border-t border-slate-800/50">
-                    {category.skills.map((skill, sIdx) => (
-                      <span key={sIdx} className="text-xs font-medium px-3.5 py-2 rounded-lg bg-slate-800/50 text-slate-300 border border-slate-700/40 hover:border-sky-500/30 transition-colors">
-                        {skill}
-                      </span>
-                    ))}
-                  </div>
-                </motion.div>
+                    <div className="flex flex-wrap gap-2.5 pt-3 border-t border-slate-800/50">
+                      {category.skills.map((skill, sIdx) => (
+                        <span key={sIdx} className="text-xs font-medium px-3.5 py-2 rounded-lg bg-slate-800/50 text-slate-300 border border-slate-700/40 hover:border-sky-500/30 transition-colors">
+                          {skill}
+                        </span>
+                      ))}
+                    </div>
+                  </motion.div>
+                </TiltCard>
               ))}
             </div>
           </div>
