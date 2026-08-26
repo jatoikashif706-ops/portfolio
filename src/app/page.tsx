@@ -97,20 +97,12 @@ const PROJECTS = [
     featured: true,
   },
   {
-    title: "E-Commerce Platform (Libas-e-Khas)",
-    description: "Custom e-commerce storefront tailored for cultural clothing, built with spec-driven development, custom measurement input forms, and localized workflows.",
-    tags: ["Next.js", "Tailwind CSS", "Shadcn UI", "State Management"],
-    githubUrl: "https://github.com/jatoikashif706-ops",
-    liveUrl: "https://github.com/jatoikashif706-ops",
-    featured: false,
-  },
-  {
     title: "CUDA Parallel Matrix Computation",
     description: "Parallel computing implementations in CUDA C++ optimizing GPU memory allocation, thread hierarchy, and high-performance array operations.",
     tags: ["CUDA C++", "GPU Parallelism", "C++", "High Performance"],
     githubUrl: "https://github.com/jatoikashif706-ops",
     liveUrl: "https://github.com/jatoikashif706-ops",
-    featured: false,
+    featured: true,
   },
 ];
 
