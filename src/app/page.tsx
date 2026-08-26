@@ -41,6 +41,16 @@ const Pipeline3D = dynamic(() => import("@/components/Pipeline3D"), {
   loading: () => <div className="h-[324px] w-full flex items-center justify-center text-xs font-mono text-slate-500">Initializing 3D Pipeline Canvas...</div>,
 });
 
+// Dynamic import for 3D Terminal
+const Terminal3D = dynamic(() => import("@/components/Terminal3D"), {
+  ssr: false,
+  loading: () => (
+    <div className="h-[420px] w-full flex items-center justify-center text-slate-500 text-xs font-mono border border-slate-800 rounded-2xl bg-slate-950/50">
+      Loading 3D Terminal Shell...
+    </div>
+  ),
+});
+
 // Helper for conditional classNames
 const cn = (...inputs: any[]) => twMerge(clsx(inputs));
 
@@ -314,6 +324,26 @@ export default function Portfolio() {
               </motion.div>
             ))}
           </div>
+        </motion.section>
+
+        {/* INTERACTIVE TERMINAL SECTION */}
+        <motion.section
+          id="about"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.3 }}
+          variants={fadeIn}
+          className="space-y-12"
+        >
+          <div className="space-y-3 text-center">
+            <h2 className="text-3xl md:text-4xl font-extrabold text-slate-100">
+              Interactive Command Center
+            </h2>
+            <p className="text-slate-400 text-sm max-w-lg mx-auto">
+              Hover to tilt the terminal in 3D space or type CLI commands below to explore my technical bio and systems background.
+            </p>
+          </div>
+          <Terminal3D />
         </motion.section>
 
         {/* FEATURED PROJECTS SECTION */}
