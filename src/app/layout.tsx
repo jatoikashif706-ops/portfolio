@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import ClientLayout from "./ClientLayout";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -101,7 +102,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`scroll-smooth ${inter.variable}`}>
       <body className="bg-slate-950 text-slate-100 font-sans antialiased selection:bg-sky-500 selection:text-white">
-        {children}
+        <ClientLayout>{children}</ClientLayout>
       </body>
     </html>
   );

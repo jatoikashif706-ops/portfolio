@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import Image from "next/image";
+import dynamic from "next/dynamic";
 import { motion, AnimatePresence } from "framer-motion";
 import { clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
@@ -20,6 +21,25 @@ import {
   Sparkles,
   ArrowRight,
 } from "lucide-react";
+import TiltCard from "@/components/TiltCard";
+
+// Dynamic import for 3D component (SSR disabled for WebGL)
+const HeroCanvas3D = dynamic(() => import("@/components/HeroCanvas3D"), {
+  ssr: false,
+  loading: () => <div className="absolute inset-0 bg-slate-950/50" />,
+});
+
+// Dynamic import for 3D Skills Sphere
+const SkillsSphere3D = dynamic(() => import("@/components/SkillsSphere3D"), {
+  ssr: false,
+  loading: () => <div className="h-[450px] w-full flex items-center justify-center text-slate-500 text-xs font-mono">Loading 3D Skills Canvas...</div>,
+});
+
+// Dynamic import for 3D Pipeline
+const Pipeline3D = dynamic(() => import("@/components/Pipeline3D"), {
+  ssr: false,
+  loading: () => <div className="h-[324px] w-full flex items-center justify-center text-xs font-mono text-slate-500">Initializing 3D Pipeline Canvas...</div>,
+});
 
 // Helper for conditional classNames
 const cn = (...inputs: any[]) => twMerge(clsx(inputs));
@@ -168,56 +188,87 @@ export default function Portfolio() {
         </div>
       </motion.header>
 
-      <main className="relative max-w-6xl mx-auto px-6 py-12 space-y-32">
-        {/* HERO / ABOUT SECTION */}
-        <motion.section
-          id="about"
-          initial="hidden"
-          animate="visible"
-          variants={fadeIn}
-          className="pt-16 md:pt-24 grid grid-cols-1 md:grid-cols-3 gap-12 items-center"
-        >
-          <div className="md:col-span-2 space-y-8">
-            <motion.div variants={fadeIn} className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-sky-500/30 bg-sky-500/10 text-sky-400 text-xs font-medium">
-              <span className="w-2 h-2 rounded-full bg-sky-400 animate-pulse" />
-              Software Engineering Student & Full-Stack Developer
-            </motion.div>
-
-            <motion.h1
-              variants={fadeIn}
-              className="text-5xl md:text-7xl font-extrabold tracking-tighter text-slate-100 leading-[0.95]"
-            >
-              Hi, I&apos;m <span className="bg-gradient-to-r from-sky-400 via-teal-300 to-emerald-400 bg-clip-text text-transparent animate-text-gradient">Kashif Qurban</span>
-            </motion.h1>
-
-            <motion.p variants={fadeIn} className="text-xl text-slate-400 leading-relaxed max-w-2xl">
-              Full-Stack & Mobile Developer experienced in building production web applications, cross-platform apps, and AI-driven solutions using Next.js, React Native, TypeScript, and cloud infrastructure.
-            </motion.p>
-
-            <motion.div variants={fadeIn} className="flex flex-wrap gap-4 pt-4">
-              <a href="#contact" className="px-6 py-3 rounded-xl bg-sky-500 hover:bg-sky-400 text-slate-950 font-semibold text-sm transition-all shadow-lg shadow-sky-500/25 flex items-center gap-2 group">
-                Hire Me <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-              </a>
-              {[
-                { href: "https://github.com/jatoikashif706-ops", icon: GitHubIcon, label: "GitHub" },
-                { href: "https://www.linkedin.com/in/kashif-qurban-92594228a/", icon: LinkedInIcon, label: "LinkedIn" },
-                { href: "https://www.upwork.com/freelancers/kashifq18", icon: UpworkIcon, label: "Upwork" }
-              ].map(link => (
-                <a key={link.label} href={link.href} target="_blank" rel="noreferrer" className="px-5 py-3 rounded-xl border border-slate-800 bg-slate-900/60 hover:bg-slate-800/80 text-slate-200 text-sm font-medium transition-colors flex items-center gap-2.5">
-                  <link.icon className="w-5 h-5" /> {link.label}
-                </a>
-              ))}
-            </motion.div>
-          </div>
-
-          <motion.div variants={fadeIn} className="flex justify-center md:justify-end">
-            <div className="relative w-64 h-64 md:w-80 md:h-80 rounded-full p-1.5 bg-gradient-to-b from-sky-500 via-teal-500 to-slate-800 shadow-2xl shadow-sky-500/15">
-              <div className="relative w-full h-full rounded-full overflow-hidden bg-slate-900 border-4 border-slate-950">
-                <Image src="/profile.jpg" alt="Kashif Qurban Profile Picture" fill sizes="(max-width: 768px) 256px, 320px" className="object-cover object-center" priority />
-              </div>
-            </div>
+      {/* HERO SECTION - Full Screen with 3D Canvas */}
+      <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+        {/* 3D Background Canvas */}
+        <HeroCanvas3D />
+        
+        {/* Radial Gradient Overlay for smooth edge fading */}
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,rgba(2,6,23,0.85)_100%)] pointer-events-none" />
+        
+        {/* Hero Foreground Content */}
+        <div className="relative z-10 max-w-5xl mx-auto px-6 py-20 text-center space-y-8">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-sky-500/30 bg-sky-500/10 text-sky-400 text-xs font-semibold backdrop-blur-md"
+          >
+            <Terminal className="w-4 h-4" /> Software Engineering Student & Full-Stack Developer
           </motion.div>
-        </motion.section>
+
+          <motion.h1
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+            className="text-5xl md:text-7xl font-extrabold tracking-tight text-slate-100 leading-tight"
+          >
+            Hi, I&apos;m{" "}
+            <span className="bg-gradient-to-r from-sky-400 via-teal-300 to-emerald-400 bg-clip-text text-transparent">
+              Kashif Qurban
+            </span>
+          </motion.h1>
+
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="text-lg md:text-xl text-slate-400 max-w-3xl mx-auto leading-relaxed"
+          >
+            Full-Stack & Mobile Developer building production web applications, cross-platform apps, AI-driven solutions, and custom WebGL experiences with Next.js, React Native, TypeScript, and C++.
+          </motion.p>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+            className="flex flex-wrap justify-center gap-4 pt-4"
+          >
+            <a
+              href="#projects"
+              className="px-8 py-3.5 rounded-xl bg-sky-500 hover:bg-sky-400 text-slate-950 font-bold text-sm transition-all shadow-lg shadow-sky-500/25 flex items-center gap-2 group"
+            >
+              Explore Projects <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            </a>
+            <a
+              href="#contact"
+              className="px-8 py-3.5 rounded-xl border border-slate-800 bg-slate-900/80 hover:bg-slate-800/80 text-slate-200 text-sm font-semibold backdrop-blur-md transition-colors"
+            >
+              Get In Touch
+            </a>
+          </motion.div>
+
+          {/* Social Links */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.4 }}
+            className="flex flex-wrap justify-center gap-4 pt-6"
+          >
+            {[
+              { href: "https://github.com/jatoikashif706-ops", icon: GitHubIcon, label: "GitHub" },
+              { href: "https://www.linkedin.com/in/kashif-qurban-92594228a/", icon: LinkedInIcon, label: "LinkedIn" },
+              { href: "https://www.upwork.com/freelancers/kashifq18", icon: UpworkIcon, label: "Upwork" }
+            ].map(link => (
+              <a key={link.label} href={link.href} target="_blank" rel="noreferrer" className="px-5 py-2.5 rounded-xl border border-slate-800/80 bg-slate-900/60 hover:bg-slate-800/80 text-slate-300 text-sm font-medium backdrop-blur-md transition-colors flex items-center gap-2.5">
+                <link.icon className="w-5 h-5" /> {link.label}
+              </a>
+            ))}
+          </motion.div>
+        </div>
+      </section>
+
+      <main className="relative max-w-6xl mx-auto px-6 py-12 space-y-32">
 
         {/* WORK EXPERIENCE SECTION */}
         <motion.section
@@ -281,44 +332,65 @@ export default function Portfolio() {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {PROJECTS.map((project, idx) => (
-              <motion.div
-                key={idx}
-                variants={fadeIn}
-                whileHover={cardHover.hover}
-                className="group relative flex flex-col justify-between p-7 rounded-2xl border border-slate-800/80 bg-slate-900/50 hover:bg-slate-900/90 hover:border-slate-700/80 transition-all duration-300"
-              >
-                <div className="space-y-5">
-                  <div className="flex items-start justify-between gap-4">
-                    <h3 className="text-2xl font-extrabold text-slate-100 group-hover:text-sky-400 transition-colors">
-                      {project.title}
-                    </h3>
-                    {project.featured && (
-                      <span className="text-[10px] font-semibold tracking-wider uppercase bg-emerald-500/10 text-emerald-400 px-3 py-1.5 rounded-lg border border-emerald-500/20">
-                        Featured
-                      </span>
-                    )}
+              <TiltCard key={idx}>
+                <motion.div
+                  variants={fadeIn}
+                  className="group relative flex flex-col justify-between p-7"
+                >
+                  <div className="space-y-5">
+                    <div className="flex items-start justify-between gap-4">
+                      <h3 className="text-2xl font-extrabold text-slate-100 group-hover:text-sky-400 transition-colors">
+                        {project.title}
+                      </h3>
+                      {project.featured && (
+                        <span className="text-[10px] font-semibold tracking-wider uppercase bg-emerald-500/10 text-emerald-400 px-3 py-1.5 rounded-lg border border-emerald-500/20">
+                          Featured
+                        </span>
+                      )}
+                    </div>
+                    <p className="text-base text-slate-400 leading-relaxed">{project.description}</p>
                   </div>
-                  <p className="text-base text-slate-400 leading-relaxed">{project.description}</p>
-                </div>
-                <div className="pt-8 space-y-6">
-                  <div className="flex flex-wrap gap-2.5">
-                    {project.tags.map((tag, tIdx) => (
-                      <span key={tIdx} className="text-xs font-mono px-3 py-1.5 rounded-lg bg-slate-800/80 text-slate-300 border border-slate-700/50">
-                        {tag}
-                      </span>
-                    ))}
+                  <div className="pt-8 space-y-6">
+                    <div className="flex flex-wrap gap-2.5">
+                      {project.tags.map((tag, tIdx) => (
+                        <span key={tIdx} className="text-xs font-mono px-3 py-1.5 rounded-lg bg-slate-800/80 text-slate-300 border border-slate-700/50">
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                    <div className="flex items-center gap-5 pt-3 border-t border-slate-800/50 opacity-80 group-hover:opacity-100 transition-opacity">
+                      <a href={project.githubUrl} target="_blank" rel="noreferrer" className="text-sm font-medium text-slate-400 hover:text-slate-100 flex items-center gap-2 transition-colors">
+                        <Github className="w-5 h-5" /> Code
+                      </a>
+                      <a href={project.liveUrl} target="_blank" rel="noreferrer" className="text-sm font-medium text-sky-400 hover:text-sky-300 flex items-center gap-2 transition-colors">
+                        <ExternalLink className="w-5 h-5" /> Live Demo
+                      </a>
+                    </div>
                   </div>
-                  <div className="flex items-center gap-5 pt-3 border-t border-slate-800/50 opacity-80 group-hover:opacity-100 transition-opacity">
-                    <a href={project.githubUrl} target="_blank" rel="noreferrer" className="text-sm font-medium text-slate-400 hover:text-slate-100 flex items-center gap-2 transition-colors">
-                      <Github className="w-5 h-5" /> Code
-                    </a>
-                    <a href={project.liveUrl} target="_blank" rel="noreferrer" className="text-sm font-medium text-sky-400 hover:text-sky-300 flex items-center gap-2 transition-colors">
-                      <ExternalLink className="w-5 h-5" /> Live Demo
-                    </a>
-                  </div>
-                </div>
-              </motion.div>
+                </motion.div>
+              </TiltCard>
             ))}
+          </div>
+        </motion.section>
+
+        {/* SYSTEM ARCHITECTURE PIPELINE */}
+        <motion.section
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.3 }}
+          variants={fadeIn}
+          className="space-y-12"
+        >
+          <div className="max-w-4xl mx-auto space-y-6">
+            <div className="text-center space-y-3">
+              <h3 className="text-2xl md:text-3xl font-extrabold text-slate-100">
+                System Architecture Visualizer
+              </h3>
+              <p className="text-sm md:text-base text-slate-400 max-w-2xl mx-auto">
+                Real-time WebGL data flow topology illustrating client-server-AI interactions. Hover over nodes to inspect each component.
+              </p>
+            </div>
+            <Pipeline3D />
           </div>
         </motion.section>
 
@@ -331,27 +403,42 @@ export default function Portfolio() {
           variants={staggerContainer}
           className="space-y-12"
         >
-          <div className="space-y-3">
-            <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-slate-100">Technical Domain & Tools</h2>
+          <div className="text-center space-y-3">
+            <h2 className="text-3xl md:text-4xl font-extrabold text-slate-100">
+              Tech Stack & Ecosystem
+            </h2>
+            <p className="text-slate-400 text-sm max-w-lg mx-auto">
+              Interactive 3D domain cloud. Drag and spin to explore my core frameworks, languages, and backend infrastructure.
+            </p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {SKILL_CATEGORIES.map((category, idx) => (
-              <motion.div key={idx} variants={fadeIn} className="p-8 rounded-2xl border border-slate-800/80 bg-slate-900/40 space-y-5">
-                <div className="flex items-center gap-3.5">
-                  <div className="p-2.5 rounded-xl bg-slate-800/80 border border-slate-700/50">
-                    {category.icon}
+          
+          {/* 3D Skills Sphere */}
+          <div className="rounded-2xl border border-slate-800 bg-slate-900/40 backdrop-blur-md overflow-hidden">
+            <SkillsSphere3D />
+          </div>
+
+          {/* Original Skill Categories Grid */}
+          <div className="pt-8">
+            <h3 className="text-2xl font-bold text-slate-100 mb-8 text-center">Organized by Domain</h3>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              {SKILL_CATEGORIES.map((category, idx) => (
+                <motion.div key={idx} variants={fadeIn} className="p-8 rounded-2xl border border-slate-800/80 bg-slate-900/40 space-y-5">
+                  <div className="flex items-center gap-3.5">
+                    <div className="p-2.5 rounded-xl bg-slate-800/80 border border-slate-700/50">
+                      {category.icon}
+                    </div>
+                    <h3 className="text-xl font-bold text-slate-200">{category.title}</h3>
                   </div>
-                  <h3 className="text-xl font-bold text-slate-200">{category.title}</h3>
-                </div>
-                <div className="flex flex-wrap gap-2.5 pt-3 border-t border-slate-800/50">
-                  {category.skills.map((skill, sIdx) => (
-                    <span key={sIdx} className="text-xs font-medium px-3.5 py-2 rounded-lg bg-slate-800/50 text-slate-300 border border-slate-700/40 hover:border-sky-500/30 transition-colors">
-                      {skill}
-                    </span>
-                  ))}
-                </div>
-              </motion.div>
-            ))}
+                  <div className="flex flex-wrap gap-2.5 pt-3 border-t border-slate-800/50">
+                    {category.skills.map((skill, sIdx) => (
+                      <span key={sIdx} className="text-xs font-medium px-3.5 py-2 rounded-lg bg-slate-800/50 text-slate-300 border border-slate-700/40 hover:border-sky-500/30 transition-colors">
+                        {skill}
+                      </span>
+                    ))}
+                  </div>
+                </motion.div>
+              ))}
+            </div>
           </div>
         </motion.section>
 
